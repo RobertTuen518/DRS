@@ -5,7 +5,7 @@ import PIL
 from sklearn.preprocessing import StandardScaler
 
 # Load the dataset
-data = pd.read_csv("C:/Users/User/PycharmProjects/Python_Tutorial/USDA_KM.csv")
+data = pd.read_csv("USDA_KM.csv")
 
 # Load the model and scaler
 kmeans = joblib.load('C:/Users/User/PycharmProjects/Python_Tutorial/kmeans.joblib')
