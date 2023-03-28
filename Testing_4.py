@@ -46,7 +46,7 @@ tab1, tab2, tab3, tab4 = st.tabs(["Page 1", "Page 2", "BMI Calculator", "Diet Re
 
 with tab1:
     # Page 1
-    image = PIL.Image.open('C:/Users/User/PycharmProjects/Python_Tutorial/OIP.jpg')
+    image = PIL.Image.open('OIP.jpg')
     st.image(image, width=640)
 
     st.title("Diet Recommendation System")
