@@ -8,7 +8,7 @@ from sklearn.preprocessing import StandardScaler
 data = pd.read_csv("USDA_KM.csv")
 
 # Load the model and scaler
-kmeans = joblib.load('C:/Users/User/PycharmProjects/Python_Tutorial/kmeans.joblib')
+kmeans = joblib.load('kmeans.joblib')
 # scaler = joblib.load('C:/Users/User/PycharmProjects/Python_Tutorial/scaler.joblib')
 
 # Create a feature matrix
