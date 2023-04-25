@@ -21,16 +21,16 @@ scaler = StandardScaler()
 scaler.fit_transform(scaled_data)
 
 
-# Define the diet_recommendation function
 def diet_recommendation(calories):
     # Calculate the recommended intake of macronutrients
     Protein = calories * 0.15 / 4
-    Fat = calories * 0.3 / 9
-    Carbohydrate = calories * 0.55 / 4
+    TotalFat = calories * 0.3 / 9
+    Carbohydrate = calories * 0.4 / 4
+    Sugar = calories * 0.1 / 4
 
     # Select foods from the same cluster as the target calorie intake
     filtered_data = data[
-        data['cluster'] == kmeans.predict(scaler.transform([[calories, Protein, Fat, Carbohydrate, 0]]))[0]]
+        data['cluster'] == kmeans.predict(scaler.transform([[calories, Protein, TotalFat, Carbohydrate, Sugar]]))[0]]
 
     # Sort the foods by energy density
     sorted_data = filtered_data.sort_values('Calories')
@@ -105,7 +105,7 @@ def page2():
         else:
             bmi = 0
 
-            bmi_status = "Invalid input: height cannot be zero"
+            st.error("Invalid input: height cannot be zero")
 
         age = float(tab1.age)
         weight = float(tab1.weight)
