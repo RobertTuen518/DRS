@@ -146,8 +146,8 @@ def page2():
 
         # Create button to navigate back to Page 1
         if st.button("Back"):
-            # Set the active tab to Page 2
-            st.session_state = tab1
+            
+            st.experimental_rerun()
 
 
 with tab3:
