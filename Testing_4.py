@@ -105,7 +105,7 @@ def page2():
         else:
             bmi = 0
 
-            bmi_status = " Invalid input: height cannot be zero"
+            bmi_status = "Invalid input: height cannot be zero"
 
         age = float(tab1.age)
         weight = float(tab1.weight)
@@ -138,7 +138,7 @@ def page2():
         st.write("Age:      ", tab1.age)
         st.write("Gender:   ", tab1.gender)
         st.write("BMI:  ", round(bmi, 2))
-        st.write("BMI Status:   ", bmi_status)
+        st.write("BMI Status:       ", bmi_status)
 
         st.session_state.tdee = round(tdee, 2)
 
