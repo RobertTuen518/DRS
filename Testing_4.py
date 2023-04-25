@@ -212,7 +212,7 @@ with tab4:
     page2()
     # Page 4
     # Retrieve the value of tdee from st.session_state
-    tdee = st.session_state["tdee"]
+    tdee = st.session_state("tdee")
 
     # Create recommend diet button on Page 2
     # Create a button that triggers the diet_recommendation function based on user input
