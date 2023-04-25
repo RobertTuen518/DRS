@@ -149,18 +149,26 @@ def page2():
         st.session_state.tdee = round(tdee, 2)
         
         # Display results in a table
-        data = {
+        data_left = {
             "Name": [tab1.name],
             "Age": [tab1.age],
             "Gender": [tab1.gender],
             "Height (cm)": [tab1.height],
-            "Weight (kg)": [tab1.weight],
+            "Weight (kg)": [tab1.weight]
+        }
+        data_right = {
             "BMI": [round(bmi, 2)],
             "BMI Status": [bmi_status],
             "Total Daily Energy Expenditure in calories:   ": [st.session_state.tdee]
         }
-        
-        st.table(data)
+
+        col1, col2 = st.columns(2)
+
+        with col1:
+            st.table(data_left)
+
+        with col2:
+            st.table(data_right)
         
         # Create button to navigate back to Page 1
         if st.button("Back"):
