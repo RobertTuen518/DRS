@@ -146,8 +146,7 @@ def page2():
 
         # Create button to navigate back to Page 1
         if st.button("Back"):
-            
-            st.experimental_rerun()
+            st.session_state.page = 1
 
 
 with tab3:
