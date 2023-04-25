@@ -58,7 +58,7 @@ def page1():
         tab1.age = st.slider("Age", 0, 120, 0)
 
         # Create a select widget for gender
-        tab1.gender = st.selectbox("Gender", options=["Male", "Female"])
+        tab1.gender = st.selectbox("Gender", options=["     ", "Male", "Female"])
 
         # Create numeric input for height
         tab1.height = st.number_input("Height (cm)", min_value=0.0, max_value=300.0, step=0.1)
@@ -105,7 +105,7 @@ def page2():
         else:
             bmi = 0
 
-            bmi_status = "Invalid input: height cannot be zero"
+            bmi_status = "\033[1mInvalid input: height cannot be zero\033[0m"
 
         age = float(tab1.age)
         weight = float(tab1.weight)
