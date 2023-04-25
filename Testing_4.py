@@ -58,7 +58,7 @@ def page1():
         tab1.age = st.slider("Age", 0, 120, 0)
 
         # Create a select widget for gender
-        tab1.gender = st.selectbox("Gender", options=["     ", "Male", "Female"])
+        tab1.gender = st.selectbox("Gender", options=["  ","Male", "Female"])
 
         # Create numeric input for height
         tab1.height = st.number_input("Height (cm)", min_value=0.0, max_value=300.0, step=0.1)
@@ -134,6 +134,7 @@ def page2():
         tdee = bmr * activity_level_value
 
         # Display results
+        '''
         st.write("Name:     ", tab1.name)
         st.write("Age:      ", tab1.age)
         st.write("Gender:   ", tab1.gender)
@@ -143,7 +144,24 @@ def page2():
         st.session_state.tdee = round(tdee, 2)
 
         st.write("Total Daily Energy Expenditure in calories:   ", st.session_state.tdee)
-
+        '''
+        
+        st.session_state.tdee = round(tdee, 2)
+        
+        # Display results in a table
+        data = {
+            "Name": [tab1.name],
+            "Age": [tab1.age],
+            "Gender": [tab1.gender],
+            "Height (cm)": [tab1.height],
+            "Weight (kg)": [tab1.weight],
+            "BMI": [round(bmi, 2)],
+            "BMI Status": [bmi_status],
+            "Total Daily Energy Expenditure in calories:   ": st.session_state.tdee]
+        }
+        
+        st.table(data)
+        
         # Create button to navigate back to Page 1
         if st.button("Back"):
             st.session_state.tab = 1
