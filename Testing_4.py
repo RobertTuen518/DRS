@@ -105,7 +105,7 @@ def page2():
         else:
             bmi = 0
 
-            bmi_status = "\033[1mInvalid input: height cannot be zero\033[0m"
+            bmi_status = " Invalid input: height cannot be zero"
 
         age = float(tab1.age)
         weight = float(tab1.weight)
