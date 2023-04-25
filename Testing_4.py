@@ -158,7 +158,7 @@ def page2():
             "BMI": [round(bmi, 2)],
             "BMI Status": [bmi_status],
             "Total Daily Energy Expenditure in calories:   ": st.session_state.tdee]
-        }
+       }
         
         st.table(data)
         
