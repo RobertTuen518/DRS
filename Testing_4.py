@@ -21,6 +21,7 @@ scaler = StandardScaler()
 scaler.fit_transform(scaled_data)
 
 
+# Define the diet_recommendation function
 def diet_recommendation(calories):
     # Calculate the recommended intake of macronutrients
     Protein = calories * 0.15 / 4
@@ -38,117 +39,121 @@ def diet_recommendation(calories):
     # Display the top 10 recommendations
     return sorted_data.head(10)
 
+
+print(diet_recommendation(100))
+print(diet_recommendation(1000))
+print(diet_recommendation(10000))
+
+
 tab1, tab2, tab3, tab4 = st.tabs(["Page 1", "Page 2", "BMI Calculator", "Diet Recommendation"])
 
+with tab1:
+    # Page 1
+    image = PIL.Image.open('OIP.jpg')
+    st.image(image, width=640)
 
-def page1():
-    with tab1:
-        # Page 1
-        image = PIL.Image.open('OIP.jpg')
-        st.image(image, width=640)
+    st.title("Diet Recommendation System")
+    st.subheader("Please enter your personal information below:")
 
-        st.title("Diet Recommendation System")
-        st.subheader("Please enter your personal information below:")
+    # Create text input for name
+    name = st.text_input("Name")
 
-        # Create text input for name
-        tab1.name = st.text_input("Name")
+    # Create numeric input for age
+    # age = st.number_input("Age", min_value=0, max_value=120)
+    age = st.slider("Age", 0, 120, 10)
 
-        # Create numeric input for age
-        # age = st.number_input("Age", min_value=0, max_value=120)
-        tab1.age = st.slider("Age", 0, 120, 0)
+    # Create a select widget for gender
+    gender = st.selectbox("Gender", options=["Male", "Female"])
 
-        # Create a select widget for gender
-        tab1.gender = st.selectbox("Gender", options=["  ","Male", "Female"])
+    # Create numeric input for height
+    height = st.number_input("Height (cm)", min_value=0.0, max_value=300.0, step=0.1)
 
-        # Create numeric input for height
-        tab1.height = st.number_input("Height (cm)", min_value=0.0, max_value=300.0, step=0.1)
+    # Create numeric input for weight
+    weight = st.number_input("Weight (kg)", min_value=0.0, max_value=500.0, step=0.1)
 
-        # Create numeric input for weight
-        tab1.weight = st.number_input("Weight (kg)", min_value=0.0, max_value=500.0, step=0.1)
+    # Create a select widget for physical activity level
+    activity_level = st.selectbox("Physical activity level", options=["Sedentary (little or no exercise)",
+                                                                      "Lightly Active (light exercise/sports      1-3 "
+                                                                      "days/week)",
+                                                                      "Moderately Active (moderate exercise/sports  "
+                                                                      " 3-5 days/week)",
+                                                                      "Very Active (hard exercise/sports    6-7 days a "
+                                                                      "week)",
+                                                                      "Extra Active (very hard exercise/sports & a "
+                                                                      "physical job)"])
 
-        # Create a select widget for physical activity level
-        tab1.activity_level = st.selectbox("Physical activity level", options=["Sedentary (little or no exercise)",
-                                                                          "Lightly Active (light exercise/sports      1-3 "
-                                                                          "days/week)",
-                                                                          "Moderately Active (moderate exercise/sports  "
-                                                                          " 3-5 days/week)",
-                                                                          "Very Active (hard exercise/sports     6-7 days a "
-                                                                          "week)",
-                                                                          "Extra Active (very hard exercise/sports & a "
-                                                                          "physical job)"])
+    # Create button to navigate to Page 2
+    if st.button("Submit"):
+        with tab2:
+            # Page 2
+            st.title("Results")
+            st.subheader("Based on the information you provided, your results are as follows:")
 
-        # Create button to navigate to Page 2
-        if st.button("Submit"):
-            # Set the active tab to Page 2
-            st.session_state = tab2
-
-
-def page2():
-    with tab2:
-        # Page 2
-        page1()
-        st.title("Results")
-        st.subheader("Based on the information you provided, your results are as follows:")
-
-        # Calculate BMI
-        if tab1.height != 0:
-            bmi = tab1.weight / ((tab1.height / 100) ** 2)
-            bmi_status = ""
-            if bmi < 18.5:
-                bmi_status = "Underweight"
-            elif 18.5 <= bmi < 25:
-                bmi_status = "Normal weight"
-            elif 25 <= bmi < 30:
-                bmi_status = "Overweight"
+            # Calculate BMI
+            if height != 0:
+                bmi = weight / ((height / 100) ** 2)
+                bmi_status = ""
+                if bmi < 18.5:
+                    bmi_status = "Underweight"
+                elif 18.5 <= bmi < 25:
+                    bmi_status = "Normal weight"
+                elif 25 <= bmi < 30:
+                    bmi_status = "Overweight"
+                else:
+                    bmi_status = "Obese"
             else:
-                bmi_status = "Obese"
-        else:
-            bmi = 0
+                bmi = 0
+                bmi_status = "Invalid input: height cannot be zero"
 
-            bmi_status = "Invalid input: height cannot be zero"
+            age = float(age)
+            weight = float(weight)
+            height = float(height)
 
-        age = float(tab1.age)
-        weight = float(tab1.weight)
-        height = float(tab1.height)
+            # Create a dictionary for each physical activity level
+            activity_level_dict = {
+                "Sedentary": 1.2,
+                "Lightly Active": 1.375,
+                "Moderately Active": 1.55,
+                "Very Active": 1.725,
+                "Extra Active": 1.9
+            }
 
-        # Create a dictionary for each physical activity level
-        activity_level_dict = {
-            "Sedentary": 1.2,
-            "Lightly Active": 1.375,
-            "Moderately Active": 1.55,
-            "Very Active": 1.725,
-            "Extra Active": 1.9
-        }
+            # Calculate total daily energy expenditure based on Harris-Benedict Equation
+            activity_level_value = activity_level_dict.get(activity_level, 1.2)
 
-        # Calculate total daily energy expenditure based on Harris-Benedict Equation
-        activity_level_value = activity_level_dict.get(tab1.activity_level, 1.2)
+            if gender == "Male":
+                bmr = 66.5 + (13.75 * weight) + (5.003 * height) - (6.75 * age)
+            else:
+                bmr = 655.1 + (9.563 * weight) + (1.850 * height) - (4.676 * age)
 
-        if tab1.gender == "Male":
-            bmr = 66.5 + (13.75 * weight) + (5.003 * height) - (6.75 * age)
-        else:
-            bmr = 655.1 + (9.563 * weight) + (1.850 * height) - (4.676 * age)
+            # Total Daily Energy Expenditure (tdee) in calories multiply Basal Metabolic Rate (bmr) by the
+            # appropriate activity factor
+            tdee = bmr * activity_level_value
 
-        # Total Daily Energy Expenditure (tdee) in calories multiply Basal Metabolic Rate (bmr) by the
-        # appropriate activity factor
+            st.session_state.tdee = round(tdee, 2)
 
-        tdee = bmr * activity_level_value
+            # Display results in table form
+            results = [
+                ("Name", name),
+                ("Age", int(age)),
+                ("Gender", gender),
+                ("BMI", round(bmi, 2)),
+                ("BMI Status", bmi_status),
+                ("Total Daily Energy Expenditure in calories", st.session_state.tdee)
+            ]
 
-        # Display results
-        st.write("Name:     ", tab1.name)
-        st.write("Age:      ", tab1.age)
-        st.write("Gender:   ", tab1.gender)
-        st.write("BMI:  ", round(bmi, 2))
-        st.write("BMI Status:       ", bmi_status)
+            col1, col2 = st.columns(2)
+            for i, r in enumerate(results):
+                with col1:
+                    st.write(f"{r[0]}:")
+                with col2:
+                    st.write(r[1])
 
-        st.session_state.tdee = round(tdee, 2)
-
-        st.write("Total Daily Energy Expenditure in calories:   ", st.session_state.tdee)
-        
-        
-        # Create button to navigate back to Page 1
-        if st.button("Back"):
-            st.session_state.page = 1
-
+            # Create button to navigate back to Page 1
+            if st.button("Back"):
+                st.session_state = tab1
+                # with tab1:
+                # st.experimental_rerun()
 
 with tab3:
     # Page 3
@@ -185,7 +190,6 @@ with tab3:
         # take height input in feet
         height = st.number_input('Feet')
 
-        # 1 meter = 3.28
         try:
             bmi = weight / ((height / 3.28) ** 2)
         except:
@@ -209,10 +213,9 @@ with tab3:
             st.error("Obese")
 
 with tab4:
-    page2()
     # Page 4
     # Retrieve the value of tdee from st.session_state
-    tdee = st.session_state.tdee
+    tdee = st.session_state.get("tdee")
 
     # Create recommend diet button on Page 2
     # Create a button that triggers the diet_recommendation function based on user input
