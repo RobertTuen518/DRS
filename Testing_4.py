@@ -38,11 +38,6 @@ def diet_recommendation(calories):
     # Display the top 10 recommendations
     return sorted_data.head(10)
 
-
-print(diet_recommendation(100))
-print(diet_recommendation(1000))
-print(diet_recommendation(10000))
-
 tab1, tab2, tab3, tab4 = st.tabs(["Page 1", "Page 2", "BMI Calculator", "Diet Recommendation"])
 
 
@@ -217,7 +212,7 @@ with tab4:
     page2()
     # Page 4
     # Retrieve the value of tdee from st.session_state
-    tdee = st.session_state.get("tdee")
+    tdee = st.session_state.get(tdee)
 
     # Create recommend diet button on Page 2
     # Create a button that triggers the diet_recommendation function based on user input
